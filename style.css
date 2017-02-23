@@ -1,0 +1,71 @@
+h1 {
+    font-family: 'Source Sans Pro', sans-serif;
+    color: #ed225d;
+    font-weight: 900;
+    letter-spacing: 10px;
+    font-size: 40px;
+}
+body {
+    background-color: #323232;
+    padding: 0;
+    margin: 0;
+    color: white;
+}
+canvas {
+    vertical-align: top;
+}
+p.description {
+    color: #fff;
+    font-family: 'Crimson Text', serif;
+    font-size: 24px;
+    font-style: italic;
+}
+
+span.code {
+    color: #ed225d;
+    font-family: 'PT Mono', monospace;
+    font-size: 20px;
+    font-style: normal;
+}
+
+#sketches-container {
+    text-align: center;
+
+}
+
+#sketches-container iframe {
+    width: 800px;
+    height: 0px;
+    margin:auto;
+    border: none;
+    transition: height 0.5s ease-in-out;
+    /*background-color: #ed225d;*/
+    margin-bottom: 30px;
+}
+
+#projects-gallery {
+    margin-top: 30px;
+}
+
+.sketch-thumb {
+    width: 100%;
+    padding-bottom: 75%;
+    background-size: cover;
+}
+
+.project {
+    padding-bottom: 15px;
+    cursor: pointer;
+}
+
+.project:hover {
+    background-color: #ed225d;
+}
+
+.project-info {
+    border-top: 1px solid white;
+}
+
+.project-info.hidden {
+    display: none;
+}

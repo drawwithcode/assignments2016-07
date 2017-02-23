@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Creative Coding PoliMi - Proj 04</title>
+
+    <meta property="og:image" content="https://drawwithcode.github.io/assignments2016-03/thumb.jpg">
+    <meta property="og:description" content="Third lesson of 'Creative Coding' at Politecnico di Milano: generate a pattern using 'random' function">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@densitydesign">
+    <meta name="twitter:title" content="Creative Coding Polimi - Proj 03">
+    <meta name="twitter:description" content="Third lesson of 'Creative Coding' at Politecnico di Milano: generate a pattern using 'random' function">
+    <meta name="twitter:image" content="https://drawwithcode.github.io/assignments2016-03/thumb.jpg">
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- import Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+
+    <!-- my style -->
+    <link href="style.css" rel="stylesheet" type="text/css">
+
+  </head>
+  <body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-8 col-sm-6">
+                <h1>DRAW WITH CODE - PROJECT 4</h1>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-xs-12 col-xs-offset-0">
+              <p class="description">Draw a fully working clock using functions and p5 timing utilities, then upload it on a GitHub page.</p>
+            </div>
+        </div>
+        <div class="row">
+          <div id="sketches-container" class="col-xs-12">
+            <iframe src=""></iframe>
+          </div>
+        </div>
+        <div class="project-info hidden row">
+          <div class="col-xs-6">
+            <p class="" id="author"></p>
+          </div>
+          <div class="col-xs-6">
+            <p class="" id="repository"></p>
+          </div>
+        </div>
+    </div>
+
+    <div class="container">
+      <div id="projects-gallery" class="row">
+        <!-- D3 Generated Elements here -->
+      </div>
+    </div>
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- include D3 -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <!-- Include Tabletop -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.4.3/tabletop.min.js"></script>
+
+    <script>
+    // var initialElm;
+
+    function generatePage(list) {
+      console.log(list);
+      if (list.length > 0) {
+        
+        list.forEach(function(i){
+          if ( i['07 repo'] && i['07 repo'] != '' ) {
+            var link = 'https://'+ i['github username'] + '.github.io/' + i['07 repo'];
+            var box = d3.select('#projects-gallery').append('div').attr('class','project col-xs-3');
+            if (i['07 thumb'] != ''){
+              var thumbUrl = i['07 thumb']
+            } else {
+              var thumbUrl = 'https://placehold.it/800x600/000000/ffffff?text=Missing%20thumb'
+            }
+            box.append('h6').text(i['Surname Name']);
+            // box.append('img').attr('src',thumbUrl).attr('class','sketch-thumb img-responsive')
+
+            box.append('div').attr('class','sketch-thumb').style('background-image','url('+thumbUrl+')')
+            
+            // On Click
+            box.on("click", function(){
+              d3.select('#sketches-container iframe').attr('src',link).style('height','600px')
+              d3.select('.project-info').classed("hidden", false);
+              d3.select('#author').selectAll("*").remove()
+              d3.select('#repository').selectAll("*").remove()
+              if (i['personal webpage'] != '') {
+                d3.select('#author').append('h5').append('a').attr('href', i['personal webpage']).text(i['Surname Name'])
+              } else {
+                d3.select('#author').append('h5').text(i['Surname Name'])
+              }
+              var repoUrl = 'https://github.com/'+i['github username']+'/'+ i['07 repo']
+              d3.select('#repository').append('h5').append('a').attr('href',repoUrl).text('Code on Github ').append('i').attr('class','fa fa-github')
+            });
+          }
+        })
+      }
+    }
+
+    // ID of google spreadsheet
+    var tableKey = '1W9BtOWB8QWEhsyA-pxUe8lF56lBBWNr1c9OLQeCHAMI'
+    function init(url) {
+      Tabletop.init( {
+        key: url,
+        callback: function(data, tabletop) {
+          generatePage(data);
+        },
+        simpleSheet: true }
+      )
+    }
+
+
+    init(tableKey)
+
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-5816319-15', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+  </body>
+</html>
